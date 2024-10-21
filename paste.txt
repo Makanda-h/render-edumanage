@@ -1,0 +1,225 @@
+
+Teachers and Courses:
+
+There is a direct many-to-many relationship between Teachers and Courses.
+This is implemented through the CourseTeacher association table.
+A teacher can teach multiple courses, and a course can be taught by multiple teachers.
+Students and Courses:
+
+There is no direct relationship between Students and Courses.
+Instead, they are related indirectly through the Enrollment model.
+This creates a many-to-many relationship with additional data (the grade) stored in the Enrollment table.
+Students and Enrollments:
+
+There is a one-to-many relationship between Students and Enrollments.
+A student can have multiple enrollments, but each enrollment belongs to only one student.
+Courses and Enrollments:
+
+There is a one-to-many relationship between Courses and Enrollments.
+A course can have multiple enrollments, but each enrollment belongs to only one course.
+Students and Teachers:
+
+There is no direct relationship between Students and Teachers in the database schema.
+They are indirectly related through the Course and Enrollment models.
+You can find a student's teachers by looking at the teachers of the courses they're enrolled in.
+Similarly, you can find a teacher's students by looking at the enrollments for the courses they teach.
+Your understanding demonstrates that you've grasped the concept of relational database design and how different entities can be related both directly and indirectly. This structure allows for flexible querying and data management in your school system.
+
+For example, if you wanted to find all students taught by a specific teacher, you would need to:
+
+Find all courses taught by the teacher
+Find all enrollments for those courses
+Get the students from those enrollments
+This indirect relationship allows for more complex scenarios, such as a student having multiple teachers for different courses, or a teacher teaching multiple courses with different sets of students.
+
+
+
+
+User Registration:
+
+Method: POST
+URL: http://127.0.0.1:5000/register
+Body (raw JSON):
+{
+  "username": "admin",
+  "email": "admin@example.com",
+  "password": "adminpass123",
+  "role": "admin"
+}
+User Login:
+
+Method: POST
+URL: http://127.0.0.1:5000/login
+Body (raw JSON):
+{
+  "username": "admin",
+  "password": "adminpass123"
+}
+This will return an access token. Copy this token for use in subsequent requests.
+For all following requests, add an Authorization header:
+
+Key: Authorization
+Value: Bearer <your_access_token>
+Now, let's go through CRUD operations for each resource:
+
+Users:
+3. Get All Users:
+
+Method: GET
+URL: http://127.0.0.1:5000/users
+Get Specific User:
+
+Method: GET
+URL: http://127.0.0.1:5000/users/1
+Update User:
+
+Method: PUT
+URL: http://127.0.0.1:5000/users/1
+Body:
+{
+  "username": "updatedadmin",
+  "email": "updatedadmin@example.com",
+  "role": "admin"
+}
+Delete User:
+
+Method: DELETE
+URL: http://127.0.0.1:5000/users/1
+Students:
+7. Create Student:
+
+Method: POST
+URL: http://127.0.0.1:5000/students
+Body:
+{
+ 
+  "student_id": "S12345",
+  "name": "John Doe",
+  "email": "john.doe@example.com"
+}
+Get All Students:
+
+Method: GET
+URL: http://127.0.0.1:5000/students
+Get Specific Student:
+
+Method: GET
+URL: http://127.0.0.1:5000/students/1
+Update Student:
+
+Method: PUT
+URL: http://127.0.0.1:5000/students/1
+Body:
+{
+  "user_id": 4,
+  "student_id": "S123444",
+  "name": "updated",
+  "email": "john.doeupdated@example.com"
+}
+Delete Student:
+
+Method: DELETE
+URL: http://127.0.0.1:5000/students/1
+
+
+Teachers:
+12. Create Teacher:
+- Method: POST
+- URL: http://127.0.0.1:5000/teachers
+- Body:
+json 
+{
+  "user_id": 3,
+  "teacher_id": "T1001",
+  "name": "John Smith",
+  "email": "john.smith@school.edu"
+}
+Get All Teachers:
+
+Method: GET
+URL: http://127.0.0.1:5000/teachers
+Get Specific Teacher:
+
+Method: GET
+URL: http://127.0.0.1:5000/teachers/1
+Update Teacher:
+
+Method: PUT
+URL: http://127.0.0.1:5000/teachers/1
+Body:
+
+{
+    "name": "John Smith Updated",
+    "email": "john.smith.updated@school.edu"
+}
+
+
+Delete Teacher:
+
+Method: DELETE
+URL: http://127.0.0.1:5000/teachers/1
+
+Courses:
+17. Create Course:
+- Method: POST
+- URL: http://127.0.0.1:5000/courses
+- Body:
+json 
+{
+    "course_name": "Introduction to Python",
+    "course_code": "CS101",
+}
+
+Get All Courses:
+
+Method: GET
+URL: http://127.0.0.1:5000/courses
+Get Specific Course:
+
+Method: GET
+URL: http://127.0.0.1:5000/courses/1
+Update Course:
+
+Method: PUT
+URL: http://127.0.0.1:5000/courses/1
+Body:
+{
+  "course_name": "Advanced Python",
+  "course_code": "CS201",
+  "teacher_id": 2
+}
+Delete Course:
+
+Method: DELETE
+URL: http://127.0.0.1:5000/courses/1
+Enrollments:
+22. Create Enrollment:
+- Method: POST
+- URL: http://127.0.0.1:5000/enrollments
+- Body:
+json {
+    "student_id": 1,
+    "course_id": 1,
+    "grade": 95.5
+}
+
+Get All Enrollments:
+
+Method: GET
+URL: http://127.0.0.1:5000/enrollments
+Get Specific Enrollment:
+
+Method: GET
+URL: http://127.0.0.1:5000/enrollments/1
+Update Enrollment:
+
+Method: PUT
+URL: http://127.0.0.1:5000/enrollments/1
+Body:
+{
+  "grade": 85
+}
+Delete Enrollment:
+
+Method: DELETE
+URL: http://127.0.0.1:5000/enrollments/1
